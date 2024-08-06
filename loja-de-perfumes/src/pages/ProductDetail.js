@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getPerfumeById } from '../services/perfumeService';
+import { getProductById } from '../services/productService';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -10,7 +10,7 @@ const ProductDetail = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await getPerfumeById(id);
+      const result = await getProductById(id);
       setProduct(result);
     };
 
@@ -25,6 +25,8 @@ const ProductDetail = () => {
     <div>
       <h1>{product.name}</h1>
       <p>{product.description}</p>
+      <p><strong>Preço:</strong> {product.price}</p>
+      <p><strong>Categoria:</strong> {product.category}</p>
     </div>
   );
 };

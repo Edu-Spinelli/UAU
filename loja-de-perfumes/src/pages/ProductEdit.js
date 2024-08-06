@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ProductForm from '../components/ProductForm';
-import { getPerfumeById } from '../services/perfumeService';
+import { getProductById } from '../services/productService';
 
 const ProductEdit = () => {
   const { id } = useParams();
@@ -13,7 +13,7 @@ const ProductEdit = () => {
   useEffect(() => {
     if (isEditing) {
       const fetchData = async () => {
-        const result = await getPerfumeById(id);
+        const result = await getProductById(id);
         setProduct(result);
       };
 
