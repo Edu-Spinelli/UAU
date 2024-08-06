@@ -19,7 +19,7 @@ const Home = () => {
   return (
     <div>
       <h1>Lista de Perfumes</h1>
-      <ProductList products={products} />
+      <ProductList products={products} setProducts={setProducts} />
     </div>
   );
 };
