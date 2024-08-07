@@ -9,7 +9,7 @@ const ProductList = ({ products, setProducts }) => {
   };
 
   return (
-    <div>
+    <div className="product-list">
       {products.map(product => (
         <ProductCard key={product.id} product={product} onDelete={handleDelete} />
       ))}

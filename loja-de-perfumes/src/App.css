@@ -47,6 +47,9 @@ h1 {
   margin-bottom: 20px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 200px; /* Defina a largura dos cartões */
+  box-sizing: border-box;
+  text-align: center; /* Centralize o conteúdo dentro do cartão */
 }
 
 .product-card h2 {
@@ -60,4 +63,18 @@ h1 {
 
 .product-card a:hover {
   text-decoration: underline;
+}
+
+.product-card img {
+  width: 150px; /* Defina a largura fixa para as imagens */
+  height: 150px; /* Defina a altura fixa para as imagens */
+  object-fit: cover; /* Faz a imagem cobrir o espaço definido */
+  margin: 10px 0; /* Adiciona espaço entre a imagem e o texto */
+}
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Reduza o espaçamento entre os cartões */
+  justify-content: center; /* Centralize os cartões */
 }

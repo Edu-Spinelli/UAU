@@ -3,26 +3,37 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createProduct, updateProduct, getProductById } from '../services/productService';
+import { getCategories } from '../services/categoryService';
 
 const ProductForm = ({ product, isEditing }) => {
   const [name, setName] = useState(product ? product.name : '');
   const [description, setDescription] = useState(product ? product.description : '');
   const [price, setPrice] = useState(product ? product.price : '');
-  const [category, setCategory] = useState(product ? product.category : '');
+  const [categoryId, setCategoryId] = useState(product ? product.categoryId : '');
+  const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
+    const fetchCategories = async () => {
+      const result = await getCategories();
+      setCategories(result);
+    };
+
+    fetchCategories();
+
     if (product) {
       setName(product.name);
       setDescription(product.description);
       setPrice(product.price);
-      setCategory(product.category);
+      setCategoryId(product.categoryId);
     }
   }, [product]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const productData = { name, description, price, category };
+    const productData = { name, description, price, categoryId };
+
+    console.log('Dados do produto:', productData);
 
     try {
       if (isEditing) {
@@ -52,7 +63,14 @@ const ProductForm = ({ product, isEditing }) => {
       </div>
       <div>
         <label>Categoria</label>
-        <input type="text" value={category} onChange={(e) => setCategory(e.target.value)} />
+        <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
+          <option value="">Selecione uma categoria</option>
+          {categories.map(category => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
       </div>
       <button type="submit">Salvar</button>
     </form>

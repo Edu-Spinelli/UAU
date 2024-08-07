@@ -21,6 +21,7 @@ const ProductCard = ({ product, onDelete }) => {
   return (
     <div className="product-card">
       <h2>{product.name}</h2>
+      {product.imageUrl && <img src={product.imageUrl} alt={product.name} />}
       <p>{product.description}</p>
       <p><strong>Preço:</strong> {product.price}</p>
       <p><strong>Categoria:</strong> {product.category}</p>

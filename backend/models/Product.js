@@ -2,6 +2,7 @@
 
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+const Category = require('./Category');
 
 const Product = sequelize.define('Product', {
   id: {
@@ -20,13 +21,22 @@ const Product = sequelize.define('Product', {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
   },
-  category: {
+  imageUrl: {
     type: DataTypes.STRING,
-    allowNull: false,
   },
+  categoryId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'Categories',
+      key: 'id'
+    }
+  }
 }, {
   timestamps: false,
   tableName: 'Products'
 });
+
+Product.belongsTo(Category, { foreignKey: 'categoryId' });
 
 module.exports = Product;
