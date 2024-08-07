@@ -1,151 +1,195 @@
 # Loja de Perfumes
 
-Este é um projeto de aplicação web para gerenciar uma loja de perfumes, implementado com React no frontend e Node.js no backend, utilizando MySQL como banco de dados.
+Este projeto é uma aplicação web para gerenciar uma loja de perfumes. A aplicação permite criar, editar, visualizar e excluir produtos, além de organizar os produtos em categorias predefinidas. A aplicação é construída utilizando Node.js no backend e React no frontend, e integra com um banco de dados MySQL para armazenamento dos dados.
+
+## Tecnologias Utilizadas
+
+### Backend
+
+- **Node.js**: Plataforma JavaScript para desenvolvimento do servidor.
+- **Express.js**: Framework para construir APIs RESTful.
+- **Sequelize**: ORM para interação com o banco de dados MySQL.
+- **MySQL**: Banco de dados relacional para armazenamento dos dados.
+- **Axios**: Biblioteca para fazer requisições HTTP.
+- **dotenv**: Biblioteca para carregar variáveis de ambiente a partir de um arquivo `.env`.
+
+### Frontend
+
+- **React**: Biblioteca JavaScript para construção de interfaces de usuário.
+- **React Router**: Biblioteca para gerenciar rotas no React.
+- **Axios**: Biblioteca para fazer requisições HTTP.
 
 ## Funcionalidades
 
-- Listar perfumes
-- Adicionar novos perfumes
-- Editar perfumes existentes
-- Visualizar detalhes dos perfumes
-- Excluir perfumes
+- **Gerenciamento de Produtos**: Criação, edição, visualização e exclusão de produtos.
+- **Categorias de Produtos**: Organização dos produtos em categorias predefinidas como Perfumes, Desodorantes, Cremes, Cosméticos, etc.
+- **Busca de Imagens**: Integração com a API do Google Custom Search para buscar imagens dos produtos automaticamente.
 
-## Requisitos
+## Configuração do Projeto
+
+### Requisitos
 
 - Node.js
-- npm (Node Package Manager)
 - MySQL
 
-## Configuração do Backend
+### Instalação
 
-### Passo 1: Clonar o repositório
+1. **Clone o repositório:**
 
-```bash
-git clone https://github.com/seu-usuario/loja-de-perfumes.git
-cd loja-de-perfumes/backend
-```
+   ```bash
+   git clone <URL_DO_REPOSITORIO>
+   cd loja-de-perfumes
+   ```
 
-### Passo 2: Instalar dependências
+2. **Configuração do Backend:**
 
-```bash
-npm install
-```
+   Navegue até o diretório do backend e instale as dependências:
 
-### Passo 3: Configurar o banco de dados
+   ```bash
+   cd backend
+   npm install
+   ```
 
-Certifique-se de ter o MySQL instalado e em execução. Crie o banco de dados e a tabela necessária:
+3. **Configuração do Frontend:**
 
-```sql
-CREATE DATABASE loja_de_perfumes;
+   Navegue até o diretório do frontend e instale as dependências:
 
-USE loja_de_perfumes;
+   ```bash
+   cd ../frontend
+   npm install
+   ```
 
-CREATE TABLE Perfumes (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  description TEXT
-);
-```
+4. **Configuração do Banco de Dados:**
 
-### Passo 4: Configurar a conexão com o banco de dados
+   - Crie um banco de dados MySQL chamado `loja_de_perfumes`.
+   - Execute o script SQL para criar as tabelas e inserir as categorias:
 
-Atualize o arquivo `config/database.js` com as suas credenciais do MySQL:
+     ```sql
+     CREATE TABLE Categories (
+       id INT AUTO_INCREMENT PRIMARY KEY,
+       name VARCHAR(255) NOT NULL
+     );
 
-```javascript
-const { Sequelize } = require('sequelize');
+     CREATE TABLE Products (
+       id INT AUTO_INCREMENT PRIMARY KEY,
+       name VARCHAR(255) NOT NULL,
+       description TEXT,
+       price DECIMAL(10, 2) NOT NULL,
+       imageUrl VARCHAR(255),
+       categoryId INT,
+       FOREIGN KEY (categoryId) REFERENCES Categories(id)
+     );
 
-const sequelize = new Sequelize('loja_de_perfumes', 'seu_usuario', 'sua_senha', {
-  host: 'localhost',
-  dialect: 'mysql',
-});
+     INSERT INTO Categories (name) VALUES
+     ('Perfumes'),
+     ('Desodorantes'),
+     ('Cremes'),
+     ('Cosméticos'),
+     ('Maquiagem'),
+     ('Cuidados com a Pele'),
+     ('Cuidados com o Cabelo'),
+     ('Higiene Pessoal'),
+     ('Acessórios');
+     ```
 
-module.exports = sequelize;
-```
+5. **Configuração do Arquivo `.env`:**
 
-### Passo 5: Popular o banco de dados (opcional)
+   Crie um arquivo `.env` no diretório do backend com as seguintes variáveis:
 
-Para popular o banco de dados com dados fictícios, você pode executar os seguintes comandos SQL:
+   ```env
+   GOOGLE_API_KEY=YOUR_GOOGLE_API_KEY
+   SEARCH_ENGINE_ID=YOUR_SEARCH_ENGINE_ID
+   DB_HOST=localhost
+   DB_USER=seu_usuario
+   DB_PASSWORD=sua_senha
+   DB_NAME=loja_de_perfumes
+   ```
 
-```sql
-INSERT INTO Perfumes (name, description) VALUES
-('Perfume A', 'Descrição do Perfume A'),
-('Perfume B', 'Descrição do Perfume B'),
-('Perfume C', 'Descrição do Perfume C'),
-('Perfume D', 'Descrição do Perfume D'),
-('Perfume E', 'Descrição do Perfume E'),
-('Perfume F', 'Descrição do Perfume F'),
-('Perfume G', 'Descrição do Perfume G'),
-('Perfume H', 'Descrição do Perfume H'),
-('Perfume I', 'Descrição do Perfume I'),
-('Perfume J', 'Descrição do Perfume J');
-```
+   Substitua `YOUR_GOOGLE_API_KEY` e `YOUR_SEARCH_ENGINE_ID` pelas suas chaves da API do Google Custom Search, e configure as credenciais do banco de dados MySQL.
 
-### Passo 6: Iniciar o servidor backend
+6. **Adicione o `.env` ao `.gitignore` para garantir que suas chaves de API e outras informações sensíveis não sejam incluídas no repositório Git:**
 
-```bash
-node server.js
-```
+   ```bash
+   echo ".env" >> .gitignore
+   ```
 
-O servidor estará rodando em `http://localhost:3001`.
+### Executando a Aplicação
 
-## Configuração do Frontend
+1. **Inicie o servidor backend:**
 
-### Passo 1: Navegar para o diretório do frontend
+   ```bash
+   cd backend
+   node server.js
+   ```
 
-```bash
-cd ../frontend
-```
+2. **Inicie o servidor frontend:**
 
-### Passo 2: Instalar dependências
+   ```bash
+   cd ../frontend
+   npm start
+   ```
 
-```bash
-npm install
-```
+3. **Acesse a aplicação no navegador:**
 
-### Passo 3: Iniciar o servidor frontend
+   Abra o navegador e vá para `http://localhost:3000`.
 
-```bash
-npm start
-```
+## API Endpoints
 
-O frontend estará rodando em `http://localhost:3000`.
+### Produtos
+
+- **GET /api/products**: Retorna todos os produtos.
+- **GET /api/products/:id**: Retorna um produto pelo ID.
+- **POST /api/products**: Cria um novo produto.
+- **PUT /api/products/:id**: Atualiza um produto pelo ID.
+- **DELETE /api/products/:id**: Deleta um produto pelo ID.
+
+### Categorias
+
+- **GET /api/categories**: Retorna todas as categorias.
 
 ## Estrutura do Projeto
 
-```
+```plaintext
 loja-de-perfumes/
 ├── backend/
 │   ├── config/
 │   │   └── database.js
 │   ├── controllers/
-│   │   └── perfumeController.js
+│   │   ├── productController.js
+│   │   └── categoryController.js
 │   ├── models/
-│   │   └── Perfume.js
+│   │   ├── Product.js
+│   │   └── Category.js
 │   ├── routes/
-│   │   └── perfumeRoutes.js
-│   └── server.js
-└── frontend/
-    ├── public/
-    ├── src/
-    │   ├── components/
-    │   │   ├── Navbar.js
-    │   │   ├── ProductCard.js
-    │   │   ├── ProductForm.js
-    │   │   └── ProductList.js
-    │   ├── pages/
-    │   │   ├── Home.js
-    │   │   ├── ProductDetail.js
-    │   │   └── ProductEdit.js
-    │   ├── services/
-    │   │   └── perfumeService.js
-    │   ├── App.css
-    │   ├── App.js
-    │   ├── index.css
-    │   └── index.js
-    └── package.json
+│   │   ├── productRoutes.js
+│   │   └── categoryRoutes.js
+│   ├── .env
+│   ├── server.js
+│   └── package.json
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── ProductForm.js
+│   │   │   ├── ProductCard.js
+│   │   │   └── ProductList.js
+│   │   ├── pages/
+│   │   │   ├── Home.js
+│   │   │   ├── ProductDetail.js
+│   │   │   └── EditProduct.js
+│   │   ├── services/
+│   │   │   ├── productService.js
+│   │   │   └── categoryService.js
+│   │   ├── App.js
+│   │   ├── App.css
+│   │   └── index.js
+│   ├── public/
+│   │   ├── index.html
+│   │   └── favicon.ico
+│   ├── .env
+│   └── package.json
+└── README.md
 ```
 
 ## Contribuição
 
-Contribuições são bem-vindas! Se você tiver sugestões ou encontrar problemas, por favor, abra uma issue ou envie um pull request.
-
+Sinta-se à vontade para contribuir com este projeto. Faça um fork do repositório, crie uma branch para suas alterações, e envie um pull request.
