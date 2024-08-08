@@ -1,5 +1,3 @@
-// src/components/ProductCard.js
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { deleteProduct, updateProduct } from '../services/productService';
@@ -48,8 +46,9 @@ const ProductCard = ({ product, onDelete, onUpdate }) => {
       <p><strong>Preço:</strong> {product.price}</p>
       <p><strong>Categoria:</strong> {product.Category ? product.Category.name : 'Categoria não disponível'}</p>
       <p><strong>Quantidade:</strong> {product.quantity}</p>
-      <div>
+      <div className="quantity-controls">
         <button onClick={handleDecrease}>-</button>
+        <input type="number" value={product.quantity} readOnly />
         <button onClick={handleIncrease}>+</button>
       </div>
       <Link to={`/product/${product.id}`}>View Details</Link> |{' '}
