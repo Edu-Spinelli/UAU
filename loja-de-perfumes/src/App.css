@@ -41,19 +41,38 @@ h1 {
   color: #343a40;
 }
 
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .product-card {
   background-color: #ffffff;
   padding: 20px;
-  margin-bottom: 20px;
+  margin: 10px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 200px; /* Defina a largura dos cartões */
+  width: calc(20% - 20px); /* Define a largura dos cartões, garantindo 5 por linha */
   box-sizing: border-box;
-  text-align: center; /* Centralize o conteúdo dentro do cartão */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .product-card h2 {
   margin-top: 0;
+  height: 50px; /* Altura fixa para os títulos */
+  overflow: hidden; /* Esconder texto que excede a altura */
+  text-overflow: ellipsis; /* Adicionar reticências ao texto que excede */
+}
+
+.product-card img {
+  width: 100%;
+  height: 150px; /* Defina uma altura fixa para as imagens */
+  object-fit: contain; /* Ajuste a imagem para caber dentro da área */
+  margin: 10px 0;
 }
 
 .product-card a {
@@ -63,18 +82,4 @@ h1 {
 
 .product-card a:hover {
   text-decoration: underline;
-}
-
-.product-card img {
-  width: 150px; /* Defina a largura fixa para as imagens */
-  height: 150px; /* Defina a altura fixa para as imagens */
-  object-fit: cover; /* Faz a imagem cobrir o espaço definido */
-  margin: 10px 0; /* Adiciona espaço entre a imagem e o texto */
-}
-
-.product-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px; /* Reduza o espaçamento entre os cartões */
-  justify-content: center; /* Centralize os cartões */
 }

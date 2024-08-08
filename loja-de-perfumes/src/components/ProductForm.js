@@ -10,6 +10,7 @@ const ProductForm = ({ product, isEditing }) => {
   const [description, setDescription] = useState(product ? product.description : '');
   const [price, setPrice] = useState(product ? product.price : '');
   const [categoryId, setCategoryId] = useState(product ? product.categoryId : '');
+  const [quantity, setQuantity] = useState(product ? product.quantity : 0);
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
 
@@ -26,14 +27,13 @@ const ProductForm = ({ product, isEditing }) => {
       setDescription(product.description);
       setPrice(product.price);
       setCategoryId(product.categoryId);
+      setQuantity(product.quantity);
     }
   }, [product]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const productData = { name, description, price, categoryId };
-
-    console.log('Dados do produto:', productData);
+    const productData = { name, description, price, categoryId, quantity };
 
     try {
       if (isEditing) {
@@ -71,6 +71,14 @@ const ProductForm = ({ product, isEditing }) => {
             </option>
           ))}
         </select>
+      </div>
+      <div>
+        <label>Quantidade</label>
+        <div>
+          <button type="button" onClick={() => setQuantity(quantity - 1)}>-</button>
+          <input type="number" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value) || 0)} />
+          <button type="button" onClick={() => setQuantity(quantity + 1)}>+</button>
+        </div>
       </div>
       <button type="submit">Salvar</button>
     </form>

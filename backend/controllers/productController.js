@@ -57,16 +57,17 @@ exports.getProductById = async (req, res) => {
 // Criar um novo produto
 exports.createProduct = async (req, res) => {
   try {
-    const { name, description, price, categoryId } = req.body;
-    const imageUrl = await fetchProductImage(name);
+    const { name, description, price, categoryId, quantity } = req.body;
+    const imageUrl = await fetchProductImage("Natura "+name);
 
-    console.log('Dados recebidos:', { name, description, price, categoryId, imageUrl });
+    console.log('Dados recebidos no backend:', { name, description, price, categoryId, quantity, imageUrl });
 
     const product = await Product.create({
       name,
       description,
       price,
       categoryId,
+      quantity,
       imageUrl
     });
     res.status(201).json(product);
@@ -79,9 +80,11 @@ exports.createProduct = async (req, res) => {
 // Atualizar um produto existente
 exports.updateProduct = async (req, res) => {
   try {
-    const [updated] = await Product.update(req.body, {
-      where: { id: req.params.id }
-    });
+    const { name, description, price, categoryId, quantity } = req.body;
+    const [updated] = await Product.update(
+      { name, description, price, categoryId, quantity },
+      { where: { id: req.params.id } }
+    );
     if (updated) {
       const updatedProduct = await Product.findByPk(req.params.id, { include: Category });
       res.status(200).json(updatedProduct);
