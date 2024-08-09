@@ -1,6 +1,6 @@
 # Loja de Perfumes
 
-Este projeto é uma aplicação web para gerenciar uma loja de perfumes. A aplicação permite criar, editar, visualizar e excluir produtos, além de organizar os produtos em categorias predefinidas. A aplicação é construída utilizando Node.js no backend e React no frontend, e integra com um banco de dados MySQL para armazenamento dos dados.
+Este projeto é uma aplicação web para gerenciar uma loja de perfumes e outros produtos relacionados. A aplicação permite criar, editar, visualizar e excluir produtos, organizar os produtos em categorias predefinidas, e filtrar produtos por categorias. A aplicação é construída utilizando Node.js no backend e React no frontend, e integra com um banco de dados MySQL para armazenamento dos dados.
 
 ## Tecnologias Utilizadas
 
@@ -24,6 +24,9 @@ Este projeto é uma aplicação web para gerenciar uma loja de perfumes. A aplic
 - **Gerenciamento de Produtos**: Criação, edição, visualização e exclusão de produtos.
 - **Categorias de Produtos**: Organização dos produtos em categorias predefinidas como Perfumes, Desodorantes, Cremes, Cosméticos, etc.
 - **Busca de Imagens**: Integração com a API do Google Custom Search para buscar imagens dos produtos automaticamente.
+- **Filtro por Categorias**: Possibilidade de filtrar produtos por categorias na página principal.
+- **Validação de Quantidade**: Não permite adicionar ou editar produtos com quantidade menor ou igual a zero.
+- **Efeito Visual no Frontend**: Ao passar o mouse sobre os cards de produtos, o conteúdo é suavemente borrado e a descrição é exibida.
 
 ## Configuração do Projeto
 
@@ -77,6 +80,7 @@ Este projeto é uma aplicação web para gerenciar uma loja de perfumes. A aplic
        price DECIMAL(10, 2) NOT NULL,
        imageUrl VARCHAR(255),
        categoryId INT,
+       quantity INT NOT NULL DEFAULT 1,
        FOREIGN KEY (categoryId) REFERENCES Categories(id)
      );
 
@@ -171,6 +175,7 @@ loja-de-perfumes/
 │   │   ├── components/
 │   │   │   ├── ProductForm.js
 │   │   │   ├── ProductCard.js
+│   │   │   ├── CategoryFilter.js
 │   │   │   └── ProductList.js
 │   │   ├── pages/
 │   │   │   ├── Home.js
