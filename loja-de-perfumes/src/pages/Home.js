@@ -1,25 +1,40 @@
-// src/pages/Home.js
-
 import React, { useState, useEffect } from 'react';
-import ProductList from '../components/ProductList';
+import ProductCard from '../components/ProductCard';
+import CategoryFilter from '../components/CategoryFilter';
 import { getProducts } from '../services/productService';
 
 const Home = () => {
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await getProducts();
-      setProducts(result);
+    const fetchProducts = async () => {
+      const allProducts = await getProducts();
+      setProducts(allProducts);
+      setFilteredProducts(allProducts);
     };
 
-    fetchData();
+    fetchProducts();
   }, []);
+
+  const handleCategoryChange = async (categoryId) => {
+    if (categoryId) {
+      const filtered = await getProducts({ categoryId });
+      setFilteredProducts(filtered);
+    } else {
+      setFilteredProducts(products);
+    }
+  };
 
   return (
     <div>
       <h1>Lista de Produtos</h1>
-      <ProductList products={products} setProducts={setProducts} />
+      <CategoryFilter onCategoryChange={handleCategoryChange} />
+      <div className="product-list">
+        {filteredProducts.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
     </div>
   );
 };

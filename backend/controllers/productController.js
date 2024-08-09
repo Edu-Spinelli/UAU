@@ -1,5 +1,3 @@
-// controllers/productController.js
-
 const Product = require('../models/Product');
 const Category = require('../models/Category');
 const axios = require('axios');
@@ -16,12 +14,24 @@ async function fetchProductImage(productName) {
         cx: SEARCH_ENGINE_ID,
         searchType: 'image',
         q: productName,
-        num: 1
+        num: 10 // Buscar até 10 imagens para validação
       }
     });
 
-    if (response.data.items && response.data.items.length > 0) {
-      return response.data.items[0].link;
+    const items = response.data.items;
+    if (items && items.length > 0) {
+      // Tentar encontrar uma imagem do site da Natura
+      const naturaImage = items.find(item => item.link.includes('natura'));
+      if (naturaImage && await isImageLoadable(naturaImage.link)) {
+        return naturaImage.link;
+      }
+      
+      // Se não encontrar imagem do site da Natura, retornar a primeira imagem válida
+      for (let item of items) {
+        if (await isImageLoadable(item.link)) {
+          return item.link;
+        }
+      }
     }
     return null;
   } catch (error) {
@@ -30,12 +40,30 @@ async function fetchProductImage(productName) {
   }
 }
 
+// Função para verificar se a imagem é carregável
+async function isImageLoadable(url) {
+  try {
+    const response = await axios.head(url);
+    return response.status === 200;
+  } catch {
+    return false;
+  }
+}
+
 // Obter todos os produtos
 exports.getAllProducts = async (req, res) => {
   try {
-    const products = await Product.findAll({ include: Category });
+    const { categoryId } = req.query;
+    const whereClause = categoryId ? { categoryId } : {};
+
+    const products = await Product.findAll({
+      where: whereClause,
+      include: Category,
+    });
+
     res.json(products);
   } catch (error) {
+    console.error('Erro ao buscar produtos:', error);
     res.status(500).json({ error: 'Erro ao buscar produtos' });
   }
 };
@@ -50,6 +78,7 @@ exports.getProductById = async (req, res) => {
       res.status(404).json({ error: 'Produto não encontrado' });
     }
   } catch (error) {
+    console.error('Erro ao buscar produto:', error);
     res.status(500).json({ error: 'Erro ao buscar produto' });
   }
 };
@@ -58,7 +87,7 @@ exports.getProductById = async (req, res) => {
 exports.createProduct = async (req, res) => {
   try {
     const { name, description, price, categoryId, quantity } = req.body;
-    const imageUrl = await fetchProductImage("Natura "+name);
+    const imageUrl = await fetchProductImage("Natura " + name);
 
     console.log('Dados recebidos no backend:', { name, description, price, categoryId, quantity, imageUrl });
 
@@ -85,13 +114,11 @@ exports.updateProduct = async (req, res) => {
       { name, description, price, categoryId, quantity },
       { where: { id: req.params.id } }
     );
-    if (updated) {
-      const updatedProduct = await Product.findByPk(req.params.id, { include: Category });
-      res.status(200).json(updatedProduct);
-    } else {
-      res.status(404).json({ error: 'Produto não encontrado' });
-    }
+
+    const updatedProduct = await Product.findByPk(req.params.id, { include: Category });
+    res.status(200).json(updatedProduct);
   } catch (error) {
+    console.error('Erro ao atualizar produto:', error);
     res.status(500).json({ error: 'Erro ao atualizar produto' });
   }
 };
@@ -108,6 +135,7 @@ exports.deleteProduct = async (req, res) => {
       res.status(404).json({ error: 'Produto não encontrado' });
     }
   } catch (error) {
+    console.error('Erro ao deletar produto:', error);
     res.status(500).json({ error: 'Erro ao deletar produto' });
   }
 };

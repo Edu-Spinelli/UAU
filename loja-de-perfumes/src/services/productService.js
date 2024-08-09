@@ -2,8 +2,9 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:3001/api/products';
 
-export const getProducts = async () => {
-  const response = await axios.get(API_URL);
+export const getProducts = async (filter = {}) => {
+  const query = new URLSearchParams(filter).toString();
+  const response = await axios.get(`${API_URL}?${query}`);
   return response.data;
 };
 

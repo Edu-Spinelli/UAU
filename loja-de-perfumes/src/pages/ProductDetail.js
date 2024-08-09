@@ -1,38 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { getProductById } from '../services/productService';
+import React, { useState, useEffect } from 'react';
+import ProductCard from '../components/ProductCard';
+import CategoryFilter from '../components/CategoryFilter';
+import { getProducts } from '../services/productService';
 
-const ProductDetail = () => {
-  const { id } = useParams();
-  const [product, setProduct] = useState(null);
+const Home = () => {
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const result = await getProductById(id);
-        setProduct(result);
-      } catch (error) {
-        console.error('Erro ao buscar o produto', error);
-      }
+    const fetchProducts = async () => {
+      const allProducts = await getProducts();
+      setProducts(allProducts);
+      setFilteredProducts(allProducts);
     };
 
-    fetchProduct();
-  }, [id]);
+    fetchProducts();
+  }, []);
 
-  if (!product) {
-    return <div>Carregando...</div>;
-  }
+  const handleCategoryChange = async (categoryId) => {
+    if (categoryId) {
+      const filtered = await getProducts({ categoryId });
+      setFilteredProducts(filtered);
+    } else {
+      setFilteredProducts(products); // Exibe todos os produtos se nenhuma categoria for selecionada
+    }
+  };
 
   return (
-    <div className="container">
-      <h1>{product.name}</h1>
-      {product.imageUrl && <img src={product.imageUrl} alt={product.name} />}
-      <p><strong>Descrição:</strong> {product.description}</p>
-      <p><strong>Preço:</strong> {product.price}</p>
-      <p><strong>Categoria:</strong> {product.Category ? product.Category.name : 'Categoria não disponível'}</p>
-      <p><strong>Quantidade:</strong> {product.quantity}</p>
+    <div>
+      <h1>Lista de Produtos</h1>
+      <CategoryFilter onCategoryChange={handleCategoryChange} />
+      <div className="product-list">
+        {filteredProducts.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
     </div>
   );
 };
 
-export default ProductDetail;
+export default Home;

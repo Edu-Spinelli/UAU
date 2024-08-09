@@ -27,13 +27,23 @@ const ProductCard = ({ product, onDelete, onUpdate }) => {
   };
 
   const handleDecrease = async () => {
-    if (product.quantity > 0) {
+    if (product.quantity > 1) {
       try {
         const updatedProduct = { ...product, quantity: product.quantity - 1 };
         await updateProduct(product.id, updatedProduct);
         onUpdate(updatedProduct);
       } catch (error) {
         console.error('Erro ao diminuir a quantidade do produto', error);
+      }
+    } else {
+      const isConfirmed = window.confirm(`A quantidade está em 1. Deseja remover o produto "${product.name}"?`);
+      if (isConfirmed) {
+        try {
+          await deleteProduct(product.id);
+          onDelete(product.id);
+        } catch (error) {
+          console.error('Erro ao deletar o produto', error);
+        }
       }
     }
   };
@@ -42,18 +52,20 @@ const ProductCard = ({ product, onDelete, onUpdate }) => {
     <div className="product-card">
       <h2>{product.name}</h2>
       {product.imageUrl && <img src={product.imageUrl} alt={product.name} />}
-      <p>{product.description}</p>
+      <p className="description">{product.description}</p> {/* Adicione a classe aqui */}
       <p><strong>Preço:</strong> {product.price}</p>
       <p><strong>Categoria:</strong> {product.Category ? product.Category.name : 'Categoria não disponível'}</p>
-      <p><strong>Quantidade:</strong> {product.quantity}</p>
+      <p><strong>Quantidade:</strong> </p>
       <div className="quantity-controls">
         <button onClick={handleDecrease}>-</button>
-        <input type="number" value={product.quantity} readOnly />
+        <input value={product.quantity} readOnly />
         <button onClick={handleIncrease}>+</button>
       </div>
-      <Link to={`/product/${product.id}`}>View Details</Link> |{' '}
-      <Link to={`/edit/${product.id}`}>Edit</Link> |{' '}
-      <a href="#" onClick={handleDelete}>Delete</a>
+      <div className="button-group">
+        <Link className="btn" to={`/product/${product.id}`}>View Details</Link>
+        <Link className="btn" to={`/edit/${product.id}`}>Edit</Link>
+        <a className="btn" href="#" onClick={handleDelete}>Delete</a>
+      </div>
     </div>
   );
 };

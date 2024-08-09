@@ -1,84 +1,131 @@
-// src/components/ProductForm.js
-
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { createProduct, updateProduct, getProductById } from '../services/productService';
 import { getCategories } from '../services/categoryService';
 
-const ProductForm = ({ product, isEditing }) => {
-  const [name, setName] = useState(product ? product.name : '');
-  const [description, setDescription] = useState(product ? product.description : '');
-  const [price, setPrice] = useState(product ? product.price : '');
-  const [categoryId, setCategoryId] = useState(product ? product.categoryId : '');
-  const [quantity, setQuantity] = useState(product ? product.quantity : 0);
-  const [categories, setCategories] = useState([]);
+const ProductForm = ({ isEditing }) => {
+  const { id } = useParams();
   const navigate = useNavigate();
+  
+  const [product, setProduct] = useState({
+    name: '',
+    description: '',
+    price: '',
+    categoryId: '',
+    quantity: 1
+  });
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const result = await getCategories();
-      setCategories(result);
+      const categories = await getCategories();
+      setCategories(categories);
+    };
+
+    const fetchProduct = async () => {
+      if (isEditing && id) {
+        const product = await getProductById(id);
+        setProduct(product);
+      }
     };
 
     fetchCategories();
+    fetchProduct();
+  }, [isEditing, id]);
 
-    if (product) {
-      setName(product.name);
-      setDescription(product.description);
-      setPrice(product.price);
-      setCategoryId(product.categoryId);
-      setQuantity(product.quantity);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name === 'quantity' && value <= 0) {
+      alert('A quantidade deve ser maior que 0.');
+      return;
     }
-  }, [product]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const productData = { name, description, price, categoryId, quantity };
+    setProduct((prevState) => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (product.quantity <= 0) {
+      alert('A quantidade deve ser maior que 0.');
+      return;
+    }
 
     try {
       if (isEditing) {
-        await updateProduct(product.id, productData);
+        await updateProduct(id, product);
       } else {
-        await createProduct(productData);
+        await createProduct(product);
       }
       navigate('/');
     } catch (error) {
-      console.error('Erro ao salvar o produto', error);
+      console.error('Erro ao salvar produto:', error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
+    <form className="product-form" onSubmit={handleSubmit}>
+      
+      <div className="form-group">
         <label>Nome</label>
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        <input
+          type="text"
+          name="name"
+          value={product.name}
+          onChange={handleChange}
+          required
+        />
       </div>
-      <div>
+      <div className="form-group">
         <label>Descrição</label>
-        <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
+        <input
+          type="text"
+          name="description"
+          value={product.description}
+          onChange={handleChange}
+          
+        />
       </div>
-      <div>
+      <div className="form-group">
         <label>Preço</label>
-        <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
+        <input
+          type="number"
+          name="price"
+          value={product.price}
+          onChange={handleChange}
+          required
+        />
       </div>
-      <div>
+      <div className="form-group">
         <label>Categoria</label>
-        <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
+        <select
+          name="categoryId"
+          value={product.categoryId}
+          onChange={handleChange}
+          required
+        >
           <option value="">Selecione uma categoria</option>
-          {categories.map(category => (
+          {categories.map((category) => (
             <option key={category.id} value={category.id}>
               {category.name}
             </option>
           ))}
         </select>
       </div>
-      <div>
+      <div className="form-group">
         <label>Quantidade</label>
-        <div>
-          <button type="button" onClick={() => setQuantity(quantity - 1)}>-</button>
-          <input type="number" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value) || 0)} />
-          <button type="button" onClick={() => setQuantity(quantity + 1)}>+</button>
-        </div>
+        <input
+          type="number"
+          name="quantity"
+          value={product.quantity}
+          onChange={handleChange}
+          required
+          min="1"
+        />
       </div>
       <button type="submit">Salvar</button>
     </form>

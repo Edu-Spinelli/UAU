@@ -142,6 +142,44 @@ h1 {
   margin: 0 5px;
 }
 
+/* Estilo para o card de adicionar produto */
+.add-product-card-link {
+  text-decoration: none; /* Remove sublinhado do link */
+  width: calc(20% - 40px); /* Igual ao tamanho dos cards */
+  margin: 10px; /* Mesma margem dos cards */
+}
+
+.add-product-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f4f4f9;
+  border: 2px dashed #6a1b9a;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%; /* Garante que a div tenha 100% do tamanho do link */
+  height: 100%; /* Altura consistente com os outros cards */
+}
+
+.add-product-card:hover {
+  background-color: #e1bee7;
+}
+
+.add-product-button {
+  font-size: 2rem;
+  color: #6a1b9a;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  width: 100%;
+  height: 100%;
+}
+
+.add-product-card:hover .add-product-button {
+  transform: scale(1.1);
+}
+
 /* Responsividade */
 @media (max-width: 1200px) {
   .product-card {
@@ -166,3 +204,135 @@ h1 {
     width: calc(100% - 40px); /* 1 por linha */
   }
 }
+
+/* Formulário de Edição/Criação de Produto */
+.product-form {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-form h1 {
+  color: #6a1b9a;
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.product-form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.product-form input[type="text"],
+.product-form input[type="number"],
+.product-form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.product-form input[type="text"]:focus,
+.product-form input[type="number"]:focus,
+.product-form select:focus {
+  border-color: #6a1b9a;
+  outline: none;
+}
+
+.product-form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #6a1b9a;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.product-form button:hover {
+  background-color: #8e24aa;
+}
+
+.product-form .form-group {
+  margin-bottom: 20px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .product-form {
+    padding: 15px;
+  }
+}
+
+.product-card {
+  position: relative;
+  overflow: hidden; /* Garante que nada saia dos limites do card */
+}
+
+.product-card-content {
+  transition: filter 0.5s ease; /* Transição suave para o efeito de blur */
+}
+
+.product-card:hover .product-card-content {
+  filter: blur(8px); /* Aplica o blur ao passar o mouse */
+}
+
+.product-card p.description {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.8); /* Fundo semitransparente para a descrição */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.5s ease; /* Transição suave para a opacidade */
+}
+
+.product-card:hover p.description {
+  opacity: 1;
+}
+
+.product-card .button-group {
+  position: relative;
+  z-index: 10; /* Mantém os botões acima de todos os outros elementos */
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  gap: 10px; /* Espaçamento entre os botões */
+}
+
+.category-filter {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.category-filter select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  color: #333;
+  background-color: #fff;
+  transition: border-color 0.3s ease;
+}
+
+.category-filter select:focus {
+  outline: none;
+  border-color: #6a1b9a;
+}
+
+
