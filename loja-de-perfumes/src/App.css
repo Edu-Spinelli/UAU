@@ -276,9 +276,7 @@ h1 {
   opacity: 0;
   transition: opacity 0.5s ease; /* Transição suave para a opacidade */
   overflow: auto; /* Permite rolagem se o conteúdo for maior que o espaço disponível */
-  box-sizing: border-box; /* Garante que o padding seja considerado na largura e altura */
 }
-
 
 .product-card:hover p.description {
   opacity: 1;
@@ -337,8 +335,7 @@ h1 {
   background-color: #f8f9fa;
   padding: 20px;
   border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1
-  );
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .reports h2 {
@@ -358,6 +355,134 @@ h1 {
 .reports li:last-child {
   border-bottom: none;
 }
+
+/* Client Form Styles */
+.add-client-button {
+  display: inline-block;
+  margin-bottom: 20px;
+  margin-top: 20px; /* Adiciona espaço acima do botão */
+}
+
+.add-client-button button {
+  padding: 10px 20px;
+  background-color: #6a1b9a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.add-client-button button:hover {
+  background-color: #8e24aa;
+}
+
+/* Estilização da Tabela de Clientes */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table th, table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+table th {
+  background-color: #6a1b9a;
+  color: white;
+}
+
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Botões de Ações na Tabela */
+table td button {
+  padding: 5px 10px;
+  margin-right: 10px; /* Aumenta o espaço entre os botões */
+  background-color: #6a1b9a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+table td button:hover {
+  background-color: #8e24aa;
+}
+
+table td button:last-child {
+  margin-right: 0;
+}
+
+.client-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.client-table th,
+.client-table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.client-table th {
+  background-color: #6a1b9a;
+  color: white;
+}
+
+.client-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.client-table .actions {
+  display: flex;
+  gap: 10px; /* Espaçamento entre os botões */
+}
+
+.client-table .btn {
+  padding: 5px 10px;
+  background-color: #6a1b9a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.client-table .btn:hover {
+  background-color: #8e24aa;
+}
+
+.add-client-button-container {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.add-client-button .btn.add-btn {
+  padding: 10px 20px;
+  background-color: #6a1b9a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.add-client-button .btn.add-btn:hover {
+  background-color: #8e24aa;
+}
+
 
 /* Responsiveness */
 @media (max-width: 1200px) {

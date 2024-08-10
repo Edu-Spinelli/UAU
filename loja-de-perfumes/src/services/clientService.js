@@ -1,5 +1,3 @@
-// src/services/clientService.js
-
 import axios from 'axios';
 
 const API_URL = 'http://localhost:3001/api/clients';
@@ -14,13 +12,13 @@ export const getClientById = async (id) => {
   return response.data;
 };
 
-export const createClient = async (client) => {
-  const response = await axios.post(API_URL, client);
+export const createClient = async (clientData) => {
+  const response = await axios.post(API_URL, clientData);
   return response.data;
 };
 
-export const updateClient = async (id, client) => {
-  const response = await axios.put(`${API_URL}/${id}`, client);
+export const updateClient = async (id, clientData) => {
+  const response = await axios.put(`${API_URL}/${id}`, clientData);
   return response.data;
 };
 

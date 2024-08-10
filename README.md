@@ -1,6 +1,6 @@
 # Loja de Perfumes
 
-Este projeto é uma aplicação web para gerenciar uma loja de perfumes e outros produtos relacionados. A aplicação permite criar, editar, visualizar e excluir produtos, organizar os produtos em categorias predefinidas, e filtrar produtos por categorias. A aplicação é construída utilizando Node.js no backend e React no frontend, e integra com um banco de dados MySQL para armazenamento dos dados.
+Este projeto é uma aplicação web para gerenciar uma loja de perfumes e outros produtos relacionados. A aplicação permite criar, editar, visualizar e excluir produtos, organizar os produtos em categorias predefinidas, filtrar produtos por categorias, e gerenciar clientes e suas compras. A aplicação é construída utilizando Node.js no backend e React no frontend, e integra com um banco de dados MySQL para armazenamento dos dados.
 
 ## Tecnologias Utilizadas
 
@@ -27,6 +27,8 @@ Este projeto é uma aplicação web para gerenciar uma loja de perfumes e outros
 - **Filtro por Categorias**: Possibilidade de filtrar produtos por categorias na página principal.
 - **Validação de Quantidade**: Não permite adicionar ou editar produtos com quantidade menor ou igual a zero.
 - **Efeito Visual no Frontend**: Ao passar o mouse sobre os cards de produtos, o conteúdo é suavemente borrado e a descrição é exibida.
+- **Gerenciamento de Clientes**: Adição, edição, visualização e exclusão de clientes com informações como nome, telefone e saldo devedor.
+- **Confirmação de Ação**: Exibe uma mensagem de confirmação ao tentar remover um produto ou cliente, incluindo o nome do item/cliente a ser removido.
 
 ## Configuração do Projeto
 
@@ -65,7 +67,7 @@ Este projeto é uma aplicação web para gerenciar uma loja de perfumes e outros
 4. **Configuração do Banco de Dados:**
 
    - Crie um banco de dados MySQL chamado `loja_de_perfumes`.
-   - Execute o script SQL para criar as tabelas e inserir as categorias:
+   - Execute o script SQL para criar as tabelas e inserir as categorias e clientes:
 
      ```sql
      CREATE TABLE Categories (
@@ -82,6 +84,15 @@ Este projeto é uma aplicação web para gerenciar uma loja de perfumes e outros
        categoryId INT,
        quantity INT NOT NULL DEFAULT 1,
        FOREIGN KEY (categoryId) REFERENCES Categories(id)
+     );
+
+     CREATE TABLE Clients (
+       id INT AUTO_INCREMENT PRIMARY KEY,
+       name VARCHAR(255) NOT NULL,
+       phone VARCHAR(20) NOT NULL,
+       balance DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
+       createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+       updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
      );
 
      INSERT INTO Categories (name) VALUES
@@ -151,6 +162,14 @@ Este projeto é uma aplicação web para gerenciar uma loja de perfumes e outros
 
 - **GET /api/categories**: Retorna todas as categorias.
 
+### Clientes
+
+- **GET /api/clients**: Retorna todos os clientes.
+- **GET /api/clients/:id**: Retorna um cliente pelo ID.
+- **POST /api/clients**: Cria um novo cliente.
+- **PUT /api/clients/:id**: Atualiza um cliente pelo ID.
+- **DELETE /api/clients/:id**: Deleta um cliente pelo ID.
+
 ## Estrutura do Projeto
 
 ```plaintext
@@ -160,13 +179,16 @@ loja-de-perfumes/
 │   │   └── database.js
 │   ├── controllers/
 │   │   ├── productController.js
-│   │   └── categoryController.js
+│   │   ├── categoryController.js
+│   │   └── clientController.js
 │   ├── models/
 │   │   ├── Product.js
-│   │   └── Category.js
+│   │   ├── Category.js
+│   │   └── Client.js
 │   ├── routes/
 │   │   ├── productRoutes.js
-│   │   └── categoryRoutes.js
+│   │   ├── categoryRoutes.js
+│   │   └── clientRoutes.js
 │   ├── .env
 │   ├── server.js
 │   └── package.json
@@ -176,14 +198,19 @@ loja-de-perfumes/
 │   │   │   ├── ProductForm.js
 │   │   │   ├── ProductCard.js
 │   │   │   ├── CategoryFilter.js
-│   │   │   └── ProductList.js
+│   │   │   ├── ProductList.js
+│   │   │   ├── ClientForm.js
+│   │   │   └── ClientList.js
 │   │   ├── pages/
 │   │   │   ├── Home.js
 │   │   │   ├── ProductDetail.js
-│   │   │   └── EditProduct.js
+│   │   │   ├── EditProduct.js
+│   │   │   ├── EditClient.js
+│   │   │   └── HomeProduct.js
 │   │   ├── services/
 │   │   │   ├── productService.js
-│   │   │   └── categoryService.js
+│   │   │   ├── categoryService.js
+│   │   │   └── clientService.js
 │   │   ├── App.js
 │   │   ├── App.css
 │   │   └── index.js
@@ -198,3 +225,4 @@ loja-de-perfumes/
 ## Contribuição
 
 Sinta-se à vontade para contribuir com este projeto. Faça um fork do repositório, crie uma branch para suas alterações, e envie um pull request.
+
