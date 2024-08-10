@@ -250,8 +250,6 @@ loja-de-perfumes/
 │   │   │   ├── ProductEdit.js
 │   │   │   ├── ClientEdit.js
 │   │   │   ├── HomeProduct.js
-│```plaintext
-│   │   ├── HomeProduct.js
 │   │   │   └── ClientList.js
 │   │   ├── services/
 │   │   │   ├── productService.js
