@@ -61,7 +61,7 @@ const ProductForm = ({ isEditing }) => {
       } else {
         await createProduct(product);
       }
-      navigate('/');
+      navigate('/products');
     } catch (error) {
       console.error('Erro ao salvar produto:', error);
     }

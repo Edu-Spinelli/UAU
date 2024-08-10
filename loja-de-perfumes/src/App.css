@@ -336,3 +336,44 @@ h1 {
 }
 
 
+.home {
+  padding: 20px;
+}
+
+.charts-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.chart {
+  width: 30%;
+  min-width: 300px;
+  margin-bottom: 20px;
+}
+
+.reports {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reports h2 {
+  margin-top: 0;
+}
+
+.reports ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.reports li {
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.reports li:last-child {
+  border-bottom: none;
+}
