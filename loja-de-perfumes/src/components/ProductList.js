@@ -1,26 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { getProducts, deleteProduct, updateProduct } from '../services/productService';
 import ProductCard from './ProductCard';
 
-const ProductList = () => {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const products = await getProducts();
-      setProducts(products);
-    };
-
-    fetchProducts();
-  }, []);
-
-  const handleDelete = (id) => {
-    setProducts(products.filter((product) => product.id !== id));
-  };
+const ProductList = ({ products, setProducts }) => {
 
   const handleUpdate = (updatedProduct) => {
     setProducts(products.map((product) => (product.id === updatedProduct.id ? updatedProduct : product)));
+  };
+
+  const handleDelete = (id) => {
+    setProducts(products.filter((product) => product.id !== id));
   };
 
   return (

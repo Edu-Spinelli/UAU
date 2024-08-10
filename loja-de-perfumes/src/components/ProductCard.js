@@ -9,7 +9,7 @@ const ProductCard = ({ product, onDelete, onUpdate }) => {
     if (isConfirmed) {
       try {
         await deleteProduct(product.id);
-        onDelete(product.id);
+        onDelete(product.id);  // Chama a função onDelete passada como prop
       } catch (error) {
         console.error('Erro ao deletar o produto', error);
       }
@@ -40,7 +40,7 @@ const ProductCard = ({ product, onDelete, onUpdate }) => {
       if (isConfirmed) {
         try {
           await deleteProduct(product.id);
-          onDelete(product.id);
+          onDelete(product.id);  // Chama a função onDelete passada como prop
         } catch (error) {
           console.error('Erro ao deletar o produto', error);
         }
@@ -52,7 +52,7 @@ const ProductCard = ({ product, onDelete, onUpdate }) => {
     <div className="product-card">
       <h2>{product.name}</h2>
       {product.imageUrl && <img src={product.imageUrl} alt={product.name} />}
-      <p className="description">{product.description}</p> {/* Adicione a classe aqui */}
+      <p className="description">{product.description}</p>
       <p><strong>Preço:</strong> {product.price}</p>
       <p><strong>Categoria:</strong> {product.Category ? product.Category.name : 'Categoria não disponível'}</p>
       <p><strong>Quantidade:</strong> </p>

@@ -1,42 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import ProductCard from '../components/ProductCard';
-import CategoryFilter from '../components/CategoryFilter';
-import { getProducts } from '../services/productService';
+import { useParams } from 'react-router-dom';
+import { getProductById } from '../services/productService';
 
-const Home = () => {
-  const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
+const ProductDetail = () => {
+  const { id } = useParams(); // Obtém o ID da URL
+  const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const allProducts = await getProducts();
-      setProducts(allProducts);
-      setFilteredProducts(allProducts);
+    const fetchProduct = async () => {
+      const fetchedProduct = await getProductById(id);
+      setProduct(fetchedProduct);
     };
 
-    fetchProducts();
-  }, []);
+    fetchProduct();
+  }, [id]);
 
-  const handleCategoryChange = async (categoryId) => {
-    if (categoryId) {
-      const filtered = await getProducts({ categoryId });
-      setFilteredProducts(filtered);
-    } else {
-      setFilteredProducts(products); // Exibe todos os produtos se nenhuma categoria for selecionada
-    }
-  };
+  if (!product) {
+    return <p>Carregando...</p>; // Exibe carregando enquanto o produto é buscado
+  }
 
   return (
     <div>
-      <h1>Lista de Produtos</h1>
-      <CategoryFilter onCategoryChange={handleCategoryChange} />
-      <div className="product-list">
-        {filteredProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
+      <h1>{product.name}</h1>
+      {product.imageUrl && <img src={product.imageUrl} alt={product.name} />}
+      <p><strong>Descrição:</strong> {product.description}</p>
+      <p><strong>Preço:</strong> {product.price}</p>
+      <p><strong>Categoria:</strong> {product.Category ? product.Category.name : 'Sem Categoria'}</p>
+      <p><strong>Quantidade:</strong> {product.quantity}</p>
     </div>
   );
 };
 
-export default Home;
+export default ProductDetail;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import ProductCard from '../components/ProductCard';
 import CategoryFilter from '../components/CategoryFilter';
+import ProductList from '../components/ProductList';
 import { getProducts } from '../services/productService';
 
 const Home = () => {
@@ -19,10 +19,10 @@ const Home = () => {
 
   const handleCategoryChange = async (categoryId) => {
     if (categoryId) {
-      const filtered = await getProducts({ categoryId });
+      const filtered = products.filter((product) => product.categoryId === parseInt(categoryId));
       setFilteredProducts(filtered);
     } else {
-      setFilteredProducts(products);
+      setFilteredProducts(products); // Exibe todos os produtos se nenhuma categoria for selecionada
     }
   };
 
@@ -30,11 +30,7 @@ const Home = () => {
     <div>
       <h1>Lista de Produtos</h1>
       <CategoryFilter onCategoryChange={handleCategoryChange} />
-      <div className="product-list">
-        {filteredProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
+      <ProductList products={filteredProducts} setProducts={setFilteredProducts} />
     </div>
   );
 };
