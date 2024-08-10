@@ -63,7 +63,7 @@ const ProductCard = ({ product, onDelete, onUpdate }) => {
       </div>
       <div className="button-group">
         <Link className="btn" to={`/product/${product.id}`}>View Details</Link>
-        <Link className="btn" to={`/edit/${product.id}`}>Edit</Link>
+        <Link className="btn" to={`/product/edit/${product.id}`}>Edit</Link>
         <a className="btn" href="#" onClick={handleDelete}>Delete</a>
       </div>
     </div>

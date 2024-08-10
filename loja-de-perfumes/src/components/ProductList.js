@@ -22,7 +22,7 @@ const ProductList = ({ products, setProducts }) => {
           onUpdate={handleUpdate}
         />
       ))}
-      <Link to="/edit/new" className="add-product-card-link">
+      <Link to="/product/edit/new" className="add-product-card-link">
         <div className="product-card add-product-card">
           <button className="add-product-button">+</button>
         </div>

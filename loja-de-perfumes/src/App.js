@@ -6,6 +6,7 @@ import ProductEdit from './pages/ProductEdit';
 import Navbar from './components/Navbar';
 import './App.css'; // Importando o arquivo CSS
 import HomeProduct from './pages/HomeProduct';
+import ClientList from './pages/clientList';
 
 
 function App() {
@@ -17,7 +18,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<HomeProduct />} />
           <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/edit/:id" element={<ProductEdit />} />
+          <Route path="/product/edit/:id" element={<ProductEdit />} />
+          <Route path="/clients" element={<ClientList/>} />
         </Routes>
       </div>
     </Router>

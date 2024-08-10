@@ -1,5 +1,4 @@
-/* src/App.css */
-
+/* Body Styles */
 body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
@@ -8,6 +7,7 @@ body {
   color: #333;
 }
 
+/* Navbar Styles */
 nav {
   background: linear-gradient(90deg, #6a1b9a, #8e24aa);
   padding: 10px 20px;
@@ -36,24 +36,28 @@ nav ul li a:hover {
   color: #f1e4f3;
 }
 
+/* Container Styles */
 .container {
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
+/* Heading Styles */
 h1 {
   color: #6a1b9a;
   text-align: center;
   margin-bottom: 20px;
 }
 
+/* Product List Styles */
 .product-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
+/* Product Card Styles */
 .product-card {
   background-color: #ffffff;
   padding: 20px;
@@ -110,6 +114,7 @@ h1 {
   text-decoration: underline;
 }
 
+/* Quantity Controls Styles */
 .product-card .quantity-controls {
   display: flex;
   justify-content: center;
@@ -142,7 +147,7 @@ h1 {
   margin: 0 5px;
 }
 
-/* Estilo para o card de adicionar produto */
+/* Add Product Card Styles */
 .add-product-card-link {
   text-decoration: none; /* Remove sublinhado do link */
   width: calc(20% - 40px); /* Igual ao tamanho dos cards */
@@ -180,32 +185,7 @@ h1 {
   transform: scale(1.1);
 }
 
-/* Responsividade */
-@media (max-width: 1200px) {
-  .product-card {
-    width: calc(25% - 40px); /* 4 por linha */
-  }
-}
-
-@media (max-width: 992px) {
-  .product-card {
-    width: calc(33.33% - 40px); /* 3 por linha */
-  }
-}
-
-@media (max-width: 768px) {
-  .product-card {
-    width: calc(50% - 40px); /* 2 por linha */
-  }
-}
-
-@media (max-width: 576px) {
-  .product-card {
-    width: calc(100% - 40px); /* 1 por linha */
-  }
-}
-
-/* Formulário de Edição/Criação de Produto */
+/* Product Form Styles */
 .product-form {
   max-width: 600px;
   margin: 0 auto;
@@ -268,13 +248,7 @@ h1 {
   margin-bottom: 20px;
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-  .product-form {
-    padding: 15px;
-  }
-}
-
+/* Product Card Hover Effects */
 .product-card {
   position: relative;
   overflow: hidden; /* Garante que nada saia dos limites do card */
@@ -293,19 +267,24 @@ h1 {
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: 100px;
   background-color: rgba(255, 255, 255, 0.8); /* Fundo semitransparente para a descrição */
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: center; /* Alinha o conteúdo no topo da div */
+  align-items:flex-start; /* Alinha o conteúdo no topo da div */
+  padding: 10px; /* Adiciona padding interno para evitar cortes */
   opacity: 0;
   transition: opacity 0.5s ease; /* Transição suave para a opacidade */
+  overflow: auto; /* Permite rolagem se o conteúdo for maior que o espaço disponível */
+  box-sizing: border-box; /* Garante que o padding seja considerado na largura e altura */
 }
+
 
 .product-card:hover p.description {
   opacity: 1;
 }
 
+/* Button Group Styles */
 .product-card .button-group {
   position: relative;
   z-index: 10; /* Mantém os botões acima de todos os outros elementos */
@@ -315,6 +294,7 @@ h1 {
   gap: 10px; /* Espaçamento entre os botões */
 }
 
+/* Category Filter Styles */
 .category-filter {
   margin-bottom: 20px;
   text-align: center;
@@ -335,7 +315,7 @@ h1 {
   border-color: #6a1b9a;
 }
 
-
+/* Home Page Styles */
 .home {
   padding: 20px;
 }
@@ -357,7 +337,8 @@ h1 {
   background-color: #f8f9fa;
   padding: 20px;
   border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1
+  );
 }
 
 .reports h2 {
@@ -376,4 +357,35 @@ h1 {
 
 .reports li:last-child {
   border-bottom: none;
+}
+
+/* Responsiveness */
+@media (max-width: 1200px) {
+  .product-card {
+    width: calc(25% - 40px); /* 4 por linha */
+  }
+}
+
+@media (max-width: 992px) {
+  .product-card {
+    width: calc(33.33% - 40px); /* 3 por linha */
+  }
+}
+
+@media (max-width: 768px) {
+  .product-card {
+    width: calc(50% - 40px); /* 2 por linha */
+  }
+}
+
+@media (max-width: 576px) {
+  .product-card {
+    width: calc(100% - 40px); /* 1 por linha */
+  }
+}
+
+@media (max-width: 768px) {
+  .product-form {
+    padding: 15px;
+  }
 }
